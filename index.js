@@ -200,7 +200,7 @@ function verificarNovoJogo(msg, codJogo, nomeJogo){
 function listaJogos(){
     return (
         //Quem Sou Eu
-        "01. :superhero: **" + mensagemJSON.jogoQuemSouEu + "**: -gb who\n" +
+        "01. :superhero: **" + mensagemJSON.jogoQuemSouEu + "**: -gb who\n"
         //Stop
         //"INDISPONÍVEL: 02. :octagonal_sign: **" + mensagemJSON.jogoStop + "**: -gb stop\n" +
         //Mega Senha
