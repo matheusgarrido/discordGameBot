@@ -19,14 +19,12 @@ bot.on('ready', ()=>{
     bot.user.setActivity("-gb help", {type: "PLAYING"});
     //Para o bot continuar sendo executado mesmo que não tenha ninguém jogando
     //Solução para Heeroku
-    if (message.content === "$loop") { 
-        var interval = setInterval (function () {
-            // use the message's channel (TextChannel) to send a new message
-            //message.channel.send("123")
-            //.catch(console.error); // add error handling here
-            return;
-        }, 1 * 1000); 
-    }
+    var interval = setInterval (function () {
+        // use the message's channel (TextChannel) to send a new message
+        //message.channel.send("123")
+        //.catch(console.error); // add error handling here
+        return;
+    }, 1 * 1000);
 });
 var jogo = 0;
 var nomeJogo = "";
