@@ -1,0 +1,53 @@
+{
+    "listaJogos": "Jogos Disponíveis no GameBot:",
+    "listaComandos": "Comandos do GameBot:",
+
+    "games": "**Lista de jogos**",
+    "gamesDescricao": "Comando para visualizar os jogos disponíveis.",
+    "join": "**Entrar no jogo**",
+    "joinDescricao": "Comando para entrar na partida do jogo selecionado.",
+    "start": "**Iniciar jogo**",
+    "startDescricao": "Comando executado pelo anfitrião da partida a fim de iniciá-la.",
+    "cancel": "**Cancelar escolha de jogo**",
+    "cancelDescricao": "Comando executado pelo anfitrião da partida a fim de cancelar antes de começar.",
+    "leave": "**Sair do jogo**",
+    "leaveDescricao": "Comando executado para sair da partida enquanto está ocorrendo.",
+    "end": "**Encerrar jogo**",
+    "endDescricao": "Comando executado pelo líder da partida a fim de finalizar a partida.",
+
+    "semSala": "Você não está em nenhuma partida.\nPara jogar, você deve selecionar um jogo em um dos canais que você participa.\nPara visualizar a lista de jogos no canal, digite -gb games.",
+    "salaVazia": "A partida está sendo encerrada pois todos jogadores saíram.",
+    "salaSozinho": "Convide mais alguém para iniciar a partida.",
+    "nenhumJogo": "Não há jogo em andamento. Digite -gb games para acessar os jogos disponíveis.",
+    "jogadorSobreposicao": "Uma partida de ",
+    "jogadorSobreposicao2": " já está em andamento ou prestes a começar.\nCaso queira sair, digite -gb cancel.",
+    "bloquearCancel": "A partida não pode ser cancelada pois já começou.",
+    "novoDono": "é o novo líder da sala.",
+    "jogoIniciado": "Que os jogos comecem!",
+    
+    "jogadorInvite": "convidou vocês para jogar ",
+    "jogadorInvite2": "Caso queira jogar, digite -gb join",
+
+    "jogadorJoin": "aceitou a partida.",
+    "jogadorStart": "iniciou a partida",
+    "jogadorCancel": "cancelou a partida.",
+    "jogadorLeave": "saiu da partida.",
+    "jogadorEnd": "(líder da sala) encerrou a partida.",
+    "jogadorEndCancel": "Somente o líder da sala possui permissão para encerrar a partida.\nVocê pode sair da partida digitando -gb leave.\nCaso todos jogadores saiam da partida, o jogo será encerrado automaticamente.",
+
+    "jogadores": "Jogadores:",
+
+    "jogoQuemSouEu": "Quem Sou Eu",
+    "quemSera": "agora é...?",
+    "quemAguardando": "Aguardando os jogadores informarem os nomes do adversários.",
+    "quemEnviado": "Ótimo! Aguarde os outros jogadores.",
+    "quemIniciando": "Todos jogadores já receberam um personagem.\nA partida será iniciada.",
+    "quemOrdenacao": "A ordem da partida será:",
+    "quemAmigos": "Seus amigos agora são:",
+    
+    "jogoStop": "Adedonha / Stop",
+    
+    "jogoSenha": "Mega Senha",
+
+    "jogoAbc": "Abecedário"
+}

@@ -1,0 +1,7 @@
+Jogador informar quando adivinhou/acertou o personagem
+
+Ordenar a colocação dos jogadores e adicionar o tempo gasto de cada um
+
+Botão para reiniciar o jogo
+
+Caso alguém saia sem informar um nome, deverá ser reiniciada a partida.
