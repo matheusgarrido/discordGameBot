@@ -254,12 +254,11 @@ function listaJogos(){
         //Lembrar de concatenar com o próximo jogo
         "01. :superhero: **" + mensagemJSON.jogoQuemSouEu + "**: -gb who\n" +
         //Mega Senha
-        "02. :question: **" + mensagemJSON.jogoSenha + "**: -gb password\n"
+        "INDISPONÍVEL 02. :question: **" + mensagemJSON.jogoSenha + "**: -gb password\n" +
         //Stop
-        //"02. :octagonal_sign: **" + mensagemJSON.jogoStop + "**: -gb stop\n" +
-        
+        "INDISPONÍVEL 03. :octagonal_sign: **" + mensagemJSON.jogoStop + "**: -gb stop\n" +
         //Abecedário
-        //"04. :a: **" + mensagemJSON.jogoAbc + "**: -gb abc"
+        "INDISPONÍVEL 04. :a: **" + mensagemJSON.jogoAbc + "**: -gb abc"
     );
 }
 

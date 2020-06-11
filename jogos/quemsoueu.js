@@ -47,6 +47,7 @@ class QuemSouEu {
             //Aguardando jogadores informarem o personagem do do amigo
             case 1:
                 var todosPersonagens = true;
+                var jogadoresPendentes = [];
                 for (var i = 0; i < this.jogadores.length; i++){
                     if (this.jogadores[i].usuario.id===msg.author.id){
                         var pos = i;
@@ -55,7 +56,10 @@ class QuemSouEu {
                         this.jogadores[pos].personagem = msg.content;
                     }
                     //Verificar se todos já possuem personagem, exceto o primeiro jogador
-                    if (this.jogadores[i].personagem === "" && i>0) todosPersonagens = false;
+                    if (this.jogadores[i].personagem === "" && i>0){
+                        todosPersonagens = false;
+                        jogadoresPendentes.push(this.jogadores[i].usuario.username);
+                    } 
                 }
                 //Agora sim verificar o primeiro jogador, senão quase sempre seria falso
                 if (this.jogadores[0].personagem === "") todosPersonagens = false;
@@ -80,12 +84,16 @@ class QuemSouEu {
                     }
                     this.canal.send("**" + ordem + "**");
                     this.canal.send(this.mensagem.jogoIniciado, { tts: true });
+                    this.canal.send(this.mensagem.quemDone);
                     this.statusJogoDM = 2;
                     this.horaInicio = new Date();
                 }
                 //Caso falte alguém informar o personagem
                 else{
+                    //Aguardando jogadores
                     msg.author.send(this.mensagem.quemEnviado);
+                    //Listar quem ainda falta
+                    this.canal.send(this.mensagem.quemFaltaEnviar + " " + jogadoresPendentes.join(", "));
                 }
                 break;
             //Caso a partida esteja em andamento
@@ -119,7 +127,6 @@ class QuemSouEu {
                 }
                 break;
             default:
-                //msg.author.send()
         }
         return this.statusJogoDM;
     }
