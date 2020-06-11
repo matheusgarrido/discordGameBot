@@ -1,4 +1,5 @@
 class QuemSouEu {
+    fimJogo = 100;
     jogadores;
     canal;
     mensagem;
@@ -26,7 +27,7 @@ class QuemSouEu {
             jogadores[i].usuario.send(jogadores[pos].usuario.username + " " + mensagem.quemSera);
         }
         this.canal.send(mensagem.quemAguardando);
-        this.statusJogoDM = 0;
+        this.statusJogoDM = 1;
     }
 
     calcularMinutos(p){
@@ -44,7 +45,7 @@ class QuemSouEu {
     dm(indexCanal, msg, prefixo){
         switch (this.statusJogoDM){
             //Aguardando jogadores informarem o personagem do do amigo
-            case 0:
+            case 1:
                 var todosPersonagens = true;
                 for (var i = 0; i < this.jogadores.length; i++){
                     if (this.jogadores[i].usuario.id===msg.author.id){
@@ -79,7 +80,7 @@ class QuemSouEu {
                     }
                     this.canal.send("**" + ordem + "**");
                     this.canal.send(this.mensagem.jogoIniciado, { tts: true });
-                    this.statusJogoDM = 1;
+                    this.statusJogoDM = 2;
                     this.horaInicio = new Date();
                 }
                 //Caso falte alguém informar o personagem
@@ -88,7 +89,7 @@ class QuemSouEu {
                 }
                 break;
             //Caso a partida esteja em andamento
-            case 1:
+            case 2:
                 if (msg.content.toLowerCase().startsWith(prefixo + " done")){
                     var todosTerminaram=true;
                     for (var j = 0; j < this.jogadores.length; j++){
@@ -99,13 +100,11 @@ class QuemSouEu {
                             if (this.jogadores[j].usuario.id===msg.author.id){
                                 this.canal.send(this.jogadores[j].usuario.username + " " + this.mensagem.quemAcertou, { tts: true });
                                 this.jogadores[j].horaFim = new Date();
-                                //this.placar[this.placar.length] = j.usuario.id;
                                 this.placar.push({
                                     "username": this.jogadores[j].usuario.username,
                                     "personagem": this.jogadores[j].personagem,
                                     "horaFim": this.jogadores[j].horaFim
                                 });
-                                //this.canal.send(this.jogadores[j].usuario.username + " " + this.mensagem.quemAcertou, { tts: true });
                             }
                             //Se algum amigo ainda não terminou
                             else{
@@ -114,12 +113,15 @@ class QuemSouEu {
                         }
                     }
                     //Se todos já terminaram, aparecerá o placar
-                    if (todosTerminaram) this.exibirPlacar();
+                    if (todosTerminaram) {
+                        this.exibirPlacar();
+                    }
                 }
                 break;
             default:
                 //msg.author.send()
         }
+        return this.statusJogoDM;
     }
 
     shuffle() {
@@ -134,7 +136,7 @@ class QuemSouEu {
 
     exibirPlacar(){
         console.log(this.placar);
-        this.statusJogoDM = 2;
+        this.statusJogoDM = this.fimJogo;
         var msgPlacar = "**"+this.mensagem.quemResultadoTitulo+"**";
         for (var i = 0; i < this.placar.length; i++){
         //this.placar.forEach(function(p, index){

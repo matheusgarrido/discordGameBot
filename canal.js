@@ -5,7 +5,7 @@ class Canal {
     jogo;
     mensagem;
     jogadores;
-    partidaIniciada;
+    partidaStatus;
     //Construtor da classe
     constructor(mensagem, dadosCanal, codJogo, tituloJogo, anfitriao){
         //Instaciando classe
@@ -13,7 +13,7 @@ class Canal {
         this.jogo = {"id": codJogo, "titulo": tituloJogo};
         this.mensagem = mensagem;
         this.jogadores = [{"usuario": anfitriao}];
-        this.partidaIniciada = 0;
+        this.partidaStatus = 0;
         //Mensagem Convite
         this.canal.send(
             anfitriao.username + " " + this.mensagem.jogadorInvite + this.jogo.titulo + ".\n",
@@ -44,7 +44,7 @@ class Canal {
             listaJogadores += "\n" + (index+1) + ". " + j.usuario.username;
         });
         this.canal.send(this.mensagem.jogadores + listaJogadores);
-        this.partidaIniciada = 1;
+        this.partidaStatus = 1;
         this.shuffle();
         switch (this.jogo.id){
             case 1:
@@ -52,6 +52,10 @@ class Canal {
                 this.jogo.partida = new QuemSouEu(this.mensagem, this.canal, this.jogadores);
                 break;
         }
+    }
+
+    partidaRestart(){
+        this.partidaStart();
     }
 }
 module.exports = Canal;

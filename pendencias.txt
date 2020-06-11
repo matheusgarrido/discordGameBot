@@ -1,7 +1,5 @@
-Jogador informar quando adivinhou/acertou o personagem
+Caso alguém saia da partida (durante o momento de informar personagem), deverá ser reiniciada a partida.
 
-Ordenar a colocação dos jogadores e adicionar o tempo gasto de cada um
+Informar termino partida
 
-Botão para reiniciar o jogo
-
-Caso alguém saia sem informar um nome, deverá ser reiniciada a partida.
+Denunciar jogador que não acertou o personagem (em 2/5 é banido da partida)

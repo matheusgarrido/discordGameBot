@@ -23,6 +23,7 @@ var nomeJogo = "";
 //Dados do usuário, personagem
 var jogadores = [];
 canais = [];
+const fimJogo = 100;
 bot.on('message', msg=>{
     if (msg.author.id!=bot.user.id){
         var prefixo = "-gb";
@@ -81,8 +82,32 @@ bot.on('message', msg=>{
                         msg.channel.send(mensagemJSON.salaSozinho);
                     }
                     // Iniciar partida
-                    else if (canais[pos].jogadores.length > 1){
+                    else if (canais[pos].jogadores.length > 1 && canais[pos].partidaStatus===0){
                         canais[pos].partidaStart();
+                    }
+                    // Bloquear início de uma outra partida simultanea no canal
+                    else if(canais[pos].partidaStatus > 0){
+                        msg.channel.send(mensagemJSON.bloquearStart);
+                    }
+                }
+                //Reiniciar partida
+                else if(texto.startsWith(prefixo + " restart")){
+                    pos = verificarPartida(msg.channel);
+                    //Verificar se foi selecionado algum jogo
+                    if (pos<0){
+                        msg.channel.send(mensagemJSON.nenhumJogo);
+                    }
+                    // Verificar só há o anfitrião no jogo
+                    else if (canais[pos].jogadores.length === 1) {
+                        msg.channel.send(mensagemJSON.salaSozinho);
+                    }
+                    // Verificar se a partida já terminou para reiniciar
+                    else if (canais[pos].partidaStatus === fimJogo){
+                        canais[pos].partidaStart();
+                    }
+                    // Caso não tenha terminado
+                    else {
+                        msg.channel.send(mensagemJSON.bloquearRestart);
                     }
                 }
                 //Cancelar partida
@@ -93,11 +118,11 @@ bot.on('message', msg=>{
                         msg.channel.send(mensagemJSON.nenhumJogo);
                     }
                     //Verificar se a partida já está acontecendo
-                    else if(canais[pos].partidaIniciada===1){
+                    else if(canais[pos].partidaStatus>0){
                         msg.channel.send(mensagemJSON.bloquearCancel);
                     }
                     //Excluir/cancelar partida
-                    else if (canais[pos]){
+                    else {
                         canais.splice(pos, 1);
                         msg.channel.send(msg.author.username + " " + mensagemJSON.jogadorCancel);
                     }
@@ -116,11 +141,15 @@ bot.on('message', msg=>{
                             canais[posCanal].canal.send(msg.author.username + " " + mensagemJSON.jogadorLeave);
                             canais[posCanal].jogadores.splice(posJogador, 1);
                             //Se não houver mais nenhum jogador, a partida será encerrada
-                            if (canais[posCanal].jogadores.length ===0 ){
+                            if (canais[posCanal].jogadores.length === 1 ){
                                 canais.splice(posCanal, 1);
                                 msg.channel.send(mensagemJSON.salaVazia, { tts: true });
                             }
                             else{
+                                //Se a partida já está em andamento mas não terminou, será reiniciada
+                                if (canais[posCanal].partidaStatus>=1 && canais[posCanal].partidaStart<fimJogo){
+                                    canais[posCanal].partidaStart();
+                                }
                                 //Atribuir novo dono à sala
                                 if (posJogador==0){
                                     canais[posCanal].canal.send(
@@ -155,11 +184,16 @@ bot.on('message', msg=>{
                 else if(texto.startsWith(prefixo + " done")){
                     //Verificar se existe partida
                     posCanal = verificarPartida(msg.channel);
+                    //Se não existir partida
                     if (posCanal<0){
                         msg.channel.send(mensagemJSON.nenhumJogo);
                     }
+                    //Se existir partida
                     else{
-                        canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
+                        var statusPartida = canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
+                        if (statusPartida===fimJogo){
+                            canais[pos].partidaStatus = fimJogo;
+                        }
                     }
                 }
                 //Lista de comandos
@@ -195,13 +229,20 @@ bot.on('message', msg=>{
 });
 
 function verificarNovoJogo(msg, codJogo, nomeJogo){
-    nomeJogo = mensagemJSON.jogoQuemSouEu;
     pos = verificarPartida(msg.channel);
     //Verificar partida em andamento ou jogo selecionado
+    console.log(canais[pos]);
     if (pos>=0){
-        msg.channel.send(mensagemJSON.jogadorSobreposicao + nomeJogo + mensagemJSON.jogadorSobreposicao2);
+        //Caso a partida anterior tenha terminado
+        if (canais[pos].partidaStatus === fimJogo){
+            canais[pos] = new Canal(mensagemJSON, msg.channel, codJogo, nomeJogo, msg.author);
+        }
+        //Caso não tenha terminado
+        else {
+            msg.channel.send(mensagemJSON.jogadorSobreposicao + nomeJogo + mensagemJSON.jogadorSobreposicao2);
+        }
     }
-    //Criar partida
+    //Criar partida caso não tenha partida criada
     else{
         canais.push(new Canal(mensagemJSON, msg.channel, codJogo, nomeJogo, msg.author));
     }
@@ -233,6 +274,9 @@ function listaComandos(){
         //Iniciar partida
         ":white_check_mark: " + mensagemJSON.start + ": -gb start\n" + 
         mensagemJSON.startDescricao + "\n\n" +
+        //Reiniciar partida
+        ":repeat: " + mensagemJSON.restart + ": -gb restart\n" + 
+        mensagemJSON.restartDescricao + "\n\n" +
         //Cancelar partida
         ":x: " + mensagemJSON.cancel + ": -gb cancel\n" + 
         mensagemJSON.cancelDescricao + "\n\n" +
