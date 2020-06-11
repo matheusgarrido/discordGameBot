@@ -26,17 +26,20 @@ canais = [];
 bot.on('message', msg=>{
     if (msg.author.id!=bot.user.id){
         var prefixo = "-gb";
-        texto = msg.content.toLowerCase();
+        var texto = msg.content.toLowerCase();
+        if (texto.startsWith("-gamebot")){
+            prefixo = "-gamebot";
+        }
         //Se for no canal coletivo
         if(msg.channel.type === "text"){
-            //Comandos
-            if (texto.startsWith("-gamebot")){
-                prefixo = "-gamebot";
-            }
+            //Comandos   
             if (texto.startsWith(prefixo)){
                 // 1. Quem Sou Eu
                 if (texto.startsWith(prefixo + " who")){
                     verificarNovoJogo(msg, 1, mensagemJSON.jogoQuemSouEu);
+                }
+                else if (texto.startsWith(prefixo + " password")){
+                    verificarNovoJogo(msg, 2, mensagemJSON.jogoSenha);
                 }
                 //Lista de comandos
                 else if (texto.startsWith(prefixo + " help")){
@@ -149,6 +152,16 @@ bot.on('message', msg=>{
                         }
                     }
                 }
+                else if(texto.startsWith(prefixo + " done")){
+                    //Verificar se existe partida
+                    posCanal = verificarPartida(msg.channel);
+                    if (posCanal<0){
+                        msg.channel.send(mensagemJSON.nenhumJogo);
+                    }
+                    else{
+                        canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
+                    }
+                }
                 //Lista de comandos
                 else {
                     msg.channel.send(
@@ -160,7 +173,6 @@ bot.on('message', msg=>{
         }
         //Se for no privado
         else if (msg.channel.type === "dm"){
-            //console.log(msg.author);
             //Verificar canal que o jogador está jogando
             indexCanal = -1;
             canais.forEach(function(c, index) {
@@ -176,10 +188,8 @@ bot.on('message', msg=>{
             }
             //Enviar código para o perfil;
             else{
-                canais[indexCanal].jogo.partida.dm(indexCanal, msg);
+                canais[indexCanal].jogo.partida.dm(indexCanal, msg, prefixo);
             }
-            //console.log(canalPartida);
-            //canalPartida.send(msg.author.username + " está jogando aqui!");
         }
     }
 });
@@ -200,13 +210,15 @@ function verificarNovoJogo(msg, codJogo, nomeJogo){
 function listaJogos(){
     return (
         //Quem Sou Eu
-        "01. :superhero: **" + mensagemJSON.jogoQuemSouEu + "**: -gb who\n"
-        //Stop
-        //"INDISPONÍVEL: 02. :octagonal_sign: **" + mensagemJSON.jogoStop + "**: -gb stop\n" +
+        //Lembrar de concatenar com o próximo jogo
+        "01. :superhero: **" + mensagemJSON.jogoQuemSouEu + "**: -gb who\n" +
         //Mega Senha
-        //"INDISPONÍVEL: 03. :question: **" + mensagemJSON.jogoSenha + "**: -gb password\n" +
+        "02. :question: **" + mensagemJSON.jogoSenha + "**: -gb password\n"
+        //Stop
+        //"02. :octagonal_sign: **" + mensagemJSON.jogoStop + "**: -gb stop\n" +
+        
         //Abecedário
-        //"INDISPONÍVEL: 03. :a: **" + mensagemJSON.jogoAbc + "**: -gb abc"
+        //"04. :a: **" + mensagemJSON.jogoAbc + "**: -gb abc"
     );
 }
 
@@ -247,7 +259,7 @@ function shuffle() {
 //Verificar se já há alguma partida em execução
 function verificarPartida(canal){
     if (canais.length>0){
-        for (var i = 0; i < canais.length; ++i){
+        for (var i = 0; i < canais.length; i++){
             if(canais[i].canal.id===canal.id){
                 return i;
             }
@@ -256,7 +268,7 @@ function verificarPartida(canal){
     return -1;
 }
 function verificarJogador(posCanal, idJogador){
-    for (var i = 0; i < canais[posCanal].jogadores.length; ++i){
+    for (var i = 0; i < canais[posCanal].jogadores.length; i++){
         if(canais[posCanal].jogadores[i].usuario.id===idJogador){
             return i;
         }

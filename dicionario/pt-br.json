@@ -1,6 +1,9 @@
 {
     "listaJogos": "Jogos Disponíveis no GameBot:",
     "listaComandos": "Comandos do GameBot:",
+    "minutos": "minutos",
+
+    "ganhou": "ganhou a partida!",
 
     "games": "**Lista de jogos**",
     "gamesDescricao": "Comando para visualizar os jogos disponíveis.",
@@ -12,8 +15,6 @@
     "cancelDescricao": "Comando executado pelo anfitrião da partida a fim de cancelar antes de começar.",
     "leave": "**Sair do jogo**",
     "leaveDescricao": "Comando executado para sair da partida enquanto está ocorrendo.",
-    "end": "**Encerrar jogo**",
-    "endDescricao": "Comando executado pelo líder da partida a fim de finalizar a partida.",
 
     "semSala": "Você não está em nenhuma partida.\nPara jogar, você deve selecionar um jogo em um dos canais que você participa.\nPara visualizar a lista de jogos no canal, digite -gb games.",
     "salaVazia": "A partida está sendo encerrada pois todos jogadores saíram.",
@@ -44,6 +45,11 @@
     "quemIniciando": "Todos jogadores já receberam um personagem.\nA partida será iniciada.",
     "quemOrdenacao": "A ordem da partida será:",
     "quemAmigos": "Seus amigos agora são:",
+    "quemDone": "Caso você acerte seu personagem, digite **-gb done**",
+    "quemAcertou": "descobriu quem era.",
+    "quemResultadoTitulo": "Placar:",
+    "quemResultado": "descobriu em",
+    "quemOps": "Oops!",
     
     "jogoStop": "Adedonha / Stop",
     
