@@ -146,7 +146,6 @@ bot.on('message', msg=>{
                         posJogador = verificarJogador(posCanal, msg.author.id);
                         if (posJogador >= 0){
                             canais[posCanal].canal.send(msg.author.username + " " + mensagemJSON.jogadorLeave);
-                            canais[posCanal].jogadores.splice(posJogador, 1);
                             //Se não houver mais nenhum jogador, a partida será encerrada
                             if (canais[posCanal].jogadores.length === 1 ){
                                 canais.splice(posCanal, 1);
@@ -154,8 +153,8 @@ bot.on('message', msg=>{
                             }
                             else{
                                 //Se a partida já está em andamento mas não terminou, será reiniciada
-                                if (canais[posCanal].partidaStatus>=1 && canais[posCanal].partidaStart<fimJogo){
-                                    canais[posCanal].partidaStart();
+                                if (canais[posCanal].partidaStatus >= 1 && canais[posCanal].partidaStart < fimJogo){
+                                    canais[pos].partidaStatus = canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
                                 }
                                 //Atribuir novo dono à sala
                                 if (posJogador==0){
@@ -165,6 +164,7 @@ bot.on('message', msg=>{
                                     );
                                 }
                             }
+                            canais[posCanal].jogadores.splice(posJogador, 1);
                         }
                     }
                 }

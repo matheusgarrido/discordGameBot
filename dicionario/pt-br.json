@@ -3,6 +3,7 @@
     "listaComandos": "Comandos do GameBot:",
     "minutos": "minutos",
 
+    "partidaTerminada": "Para jogar o mesmo jogo com os mesmos jogadores, digite **-gb restart**\nPara ver os outros jogos disponíveis, digite **-gb games**",
     "ganhou": "ganhou a partida!",
 
     "games": "**Lista de jogos**",
@@ -50,6 +51,7 @@
     "quemEnviado": "Ótimo! Aguarde os outros jogadores.",
     "quemFaltaEnviar": "Quem ainda falta enviar o personagem:",
     "quemRefazerPersonagem": "reiniciou a partida pois não concordou com algum personagem informado.\nTodos jogadores devem informar outro personagem.",
+    "quemSubstituirPersonagemLeave": "saiu da partida. O personagem escolhido para ele agora vai para",
     "quemIniciando": "Todos jogadores já receberam um personagem.\nA partida será iniciada.",
     "quemOrdenacao": "A ordem da partida será:",
     "quemAmigos": "Seus amigos agora são:",

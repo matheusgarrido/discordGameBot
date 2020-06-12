@@ -1,7 +1,1 @@
-Caso alguém saia da partida (durante o momento de informar personagem), deverá ser reiniciada a partida.
-
-Informar termino partida
-
-Exibir quem falta informar os personagens
-
 Denunciar jogador que não acertou o personagem (em 2/5 é banido da partida)

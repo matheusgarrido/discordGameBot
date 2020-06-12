@@ -41,11 +41,31 @@ class QuemSouEu {
         var m = (min < 10 ? "0" : "") + min + ":" + (sec < 10 ? "0" : "") + sec;
         return m + " " + this.mensagem.minutos;
     }
-        
+    
+    //1 - Jogadores estão informando os personagens
+    //2 - Partida em execução
+    //100 - Partida finalizada
     dm(indexCanal, msg, prefixo){
         switch (this.statusJogoDM){
             //Aguardando jogadores informarem o personagem do do amigo
             case 1:
+                //Caso um jogador saia enquanto informava o personagem
+                if (msg.content.toLowerCase().startsWith(prefixo + " leave")){
+                    for (var i = 0; i < this.jogadores.length; i++){
+                        if (this.jogadores[i].usuario.id===msg.author.id){
+                            var pos = i;
+                            //Posição do próximo jogador
+                            (pos === this.jogadores.length-1)?pos = 0:pos++;
+                            //Se jogador for o primeiro pega o último, senão pega o anterior
+                            var posJogadorAnterior = (i===0)?(this.jogadores.length-1):(i-1);
+                            //Próximo jogador pega o personagem do jogador atual;
+                            this.jogadores[pos].personagem = this.jogadores[i].personagem;
+                            //Mandar mensagem para quem escolheu personagem para o amigo que saiu
+                            this.jogadores[posJogadorAnterior].send(this.jogadores[i].username + " " + this.mensagem.quemSubstituirPersonagemLeave + " " + this.jogadores[pos].username);
+                        }
+                    }
+                    return this.statusJogoDM;
+                }
                 var todosPersonagens = true;
                 var jogadoresPendentes = [];
                 for (var i = 0; i < this.jogadores.length; i++){
@@ -167,6 +187,7 @@ class QuemSouEu {
         this.canal.send(this.placar[0].personagem + " " + this.mensagem.ganhou + " " + this.mensagem.quemOps + " " + this.placar[0].username +
             " " + this.mensagem.ganhou, { tts: true });
         this.canal.send(":trophy: :trophy: :trophy: :trophy: :trophy: :trophy: :trophy: :trophy: :trophy:");
+        this.canal.send(this.mensagem.partidaTerminada);
     }
 }
 module.exports = QuemSouEu;
