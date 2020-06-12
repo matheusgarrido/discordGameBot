@@ -101,11 +101,18 @@ bot.on('message', msg=>{
                     else if (canais[pos].jogadores.length === 1) {
                         msg.channel.send(mensagemJSON.salaSozinho);
                     }
-                    // Verificar se a partida já terminou para reiniciar
-                    else if (canais[pos].partidaStatus === fimJogo){
-                        canais[pos].partidaStart();
+                    // Verificar se já começou ou terminou uma partida
+                    else if (canais[pos].partidaStatus > 0){
+                        // Caso tenha iniciado
+                        if (canais[pos].partidaStatus < fimJogo){
+                            canais[pos].partidaRestart(msg);
+                        }
+                        //Caso já tenha terminado
+                        else if(canais[pos].partidaStatus === fimJogo){
+                            canais[pos].partidaStart();
+                        }
                     }
-                    // Caso não tenha terminado
+                    // Caso não tenha iniciado
                     else {
                         msg.channel.send(mensagemJSON.bloquearRestart);
                     }
@@ -190,10 +197,10 @@ bot.on('message', msg=>{
                     }
                     //Se existir partida
                     else{
-                        var statusPartida = canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
-                        if (statusPartida===fimJogo){
-                            canais[pos].partidaStatus = fimJogo;
-                        }
+                        canais[pos].partidaStatus = canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
+                        //if (statusPartida===fimJogo){
+                          //  canais[pos].partidaStatus = fimJogo;
+                        //}
                     }
                 }
                 //Lista de comandos
@@ -222,7 +229,7 @@ bot.on('message', msg=>{
             }
             //Enviar código para o perfil;
             else{
-                canais[indexCanal].jogo.partida.dm(indexCanal, msg, prefixo);
+                canais[indexCanal].partidaStatus = canais[indexCanal].jogo.partida.dm(indexCanal, msg, prefixo);
             }
         }
     }

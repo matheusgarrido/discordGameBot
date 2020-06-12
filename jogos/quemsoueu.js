@@ -126,7 +126,6 @@ class QuemSouEu {
                     }
                 }
                 break;
-            default:
         }
         return this.statusJogoDM;
     }

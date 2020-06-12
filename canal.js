@@ -54,7 +54,15 @@ class Canal {
         }
     }
 
-    partidaRestart(){
+    partidaRestart(msg){
+        this.shuffle();
+        switch(this.jogo.id){
+            case 1:
+                if (this.placar.length===0){
+                    this.canal.send(msg.author.username + " " + this.mensagem.quemRefazerPersonagem);
+                }
+                break;
+        }
         this.partidaStart();
     }
 }
