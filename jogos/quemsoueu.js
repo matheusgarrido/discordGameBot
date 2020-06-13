@@ -46,11 +46,12 @@ class QuemSouEu {
     //2 - Partida em execução
     //100 - Partida finalizada
     dm(indexCanal, msg, prefixo){
+        var texto = msg.content.toLowerCase();
         switch (this.statusJogoDM){
             //Aguardando jogadores informarem o personagem do do amigo
             case 1:
                 //Caso um jogador saia enquanto informava o personagem
-                if (msg.content.toLowerCase().startsWith(prefixo + " leave")){
+                if ((texto.startsWith(prefixo + " sair"))||(texto.startsWith(prefixo + " leave"))){
                     for (var i = 0; i < this.jogadores.length; i++){
                         if (this.jogadores[i].usuario.id===msg.author.id){
                             var pos = i;
@@ -121,10 +122,9 @@ class QuemSouEu {
                 break;
             //Caso a partida esteja em andamento
             case 2:
-                if (msg.content.toLowerCase().startsWith(prefixo + " done")){
+                if ((texto.startsWith(prefixo + " pronto"))||(texto.startsWith(prefixo + " done"))){
                     var todosTerminaram=true;
                     for (var j = 0; j < this.jogadores.length; j++){
-                    //this.jogadores.forEach(function(j){
                         //Se terminou agora
                         if (this.jogadores[j].horaFim===null){
                             //Se o jogador terminou agora
@@ -168,7 +168,6 @@ class QuemSouEu {
         this.statusJogoDM = this.fimJogo;
         var msgPlacar = "**"+this.mensagem.quemResultadoTitulo+"**";
         for (var i = 0; i < this.placar.length; i++){
-        //this.placar.forEach(function(p, index){
             msgPlacar += "\n";
             switch(i){
                 case 0:

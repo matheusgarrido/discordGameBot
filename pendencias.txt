@@ -1,1 +1,5 @@
 Denunciar jogador que não acertou o personagem (em 2/5 é banido da partida)
+
+Bloquear jogador de jogar em diferentes canais simultaneamente
+
+Colocar comandos disponíveis em portugues e ingles

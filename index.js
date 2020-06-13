@@ -16,7 +16,8 @@ if ("br" === "br"){
 
 bot.on('ready', ()=>{
     console.log('Estou pronto para ser usado');
-    bot.user.setActivity("-gb help", {type: "PLAYING"});
+    //bot.user.setActivity("-gb ajuda", {type: "PLAYING"});
+    bot.user.setActivity("Manual: **-gb help** ou **-gb ajuda**", {type: 4});
 });
 var jogo = 0;
 var nomeJogo = "";
@@ -33,29 +34,38 @@ bot.on('message', msg=>{
         }
         //Se for no canal coletivo
         if(msg.channel.type === "text"){
-            //Comandos   
+            //Comandos
             if (texto.startsWith(prefixo)){
                 // 1. Quem Sou Eu
-                if (texto.startsWith(prefixo + " who")){
+                if ((texto.startsWith(prefixo + " quem"))||(texto.startsWith(prefixo + " who"))){
                     verificarNovoJogo(msg, 1, mensagemJSON.jogoQuemSouEu);
                 }
-                else if (texto.startsWith(prefixo + " password")){
-                    verificarNovoJogo(msg, 2, mensagemJSON.jogoSenha);
+                //2. Stop / adedonha
+                else if (texto.startsWith(prefixo + " stop")){
+                    verificarNovoJogo(msg, 2, mensagemJSON.jogoStop);
+                }
+                //3. Mega senha
+                else if ((texto.startsWith(prefixo + " senha"))||(texto.startsWith(prefixo + " password"))){
+                    verificarNovoJogo(msg, 3, mensagemJSON.jogoSenha);
+                }
+                //4. Abcdário
+                else if (texto.startsWith(prefixo + " abc")){
+                    verificarNovoJogo(msg, 4, mensagemJSON.jogoSenha);
                 }
                 //Lista de comandos
-                else if (texto.startsWith(prefixo + " help")){
+                else if ((texto.startsWith(prefixo + " ajuda"))||(texto.startsWith(prefixo + " help"))){
                     msg.channel.send(
                         mensagemJSON.listaComandos + "\n\n" + listaComandos()
                     );
                 }
                 //Lista de jogos
-                else if(texto.startsWith(prefixo + " games")){
+                else if((texto.startsWith(prefixo + " jogos"))||(texto.startsWith(prefixo + " games"))){
                     msg.channel.send(
                         mensagemJSON.listaJogos + "\n" + listaJogos()
                     );
                 }
                 //Entrar na partida
-                else if(texto.startsWith(prefixo + " join")){
+                else if((texto.startsWith(prefixo + " entrar"))||(texto.startsWith(prefixo + " join"))){
                     //Verificar se existe partida
                     pos = verificarPartida(msg.channel);
                     if (pos<0){
@@ -71,7 +81,7 @@ bot.on('message', msg=>{
                     }
                 }
                 //Iniciar partida
-                else if(texto.startsWith(prefixo + " start")){
+                else if((texto.startsWith(prefixo + " iniciar"))||(texto.startsWith(prefixo + " start"))){
                     pos = verificarPartida(msg.channel);
                     //Verificar se foi selecionado algum jogo
                     if (pos<0){
@@ -91,7 +101,7 @@ bot.on('message', msg=>{
                     }
                 }
                 //Reiniciar partida
-                else if(texto.startsWith(prefixo + " restart")){
+                else if((texto.startsWith(prefixo + " reiniciar"))||(texto.startsWith(prefixo + " restart"))){
                     pos = verificarPartida(msg.channel);
                     //Verificar se foi selecionado algum jogo
                     if (pos<0){
@@ -118,7 +128,7 @@ bot.on('message', msg=>{
                     }
                 }
                 //Cancelar partida
-                else if(texto.startsWith(prefixo + " cancel")){
+                else if((texto.startsWith(prefixo + " cancelar"))||(texto.startsWith(prefixo + " cancel"))){
                     //Verificar se foi selecionado algum jogo
                     pos = verificarPartida(msg.channel);
                     if (pos<0){
@@ -135,7 +145,7 @@ bot.on('message', msg=>{
                     }
                 }
                 //Sair da partida
-                else if (texto.startsWith(prefixo + " leave")){
+                else if ((texto.startsWith(prefixo + " sair"))||(texto.startsWith(prefixo + " leave"))){
                     //Verificar se existe partida
                     posCanal = verificarPartida(msg.channel);
                     if (posCanal<0){
@@ -169,7 +179,7 @@ bot.on('message', msg=>{
                     }
                 }
                 //Encerrar partida
-                else if (texto.startsWith(prefixo + " end")){
+                else if ((texto.startsWith(prefixo + " encerrar"))||(texto.startsWith(prefixo + " end"))){
                     //Verificar se existe partida
                     posCanal = verificarPartida(msg.channel);
                     if (posCanal<0){
@@ -188,7 +198,7 @@ bot.on('message', msg=>{
                         }
                     }
                 }
-                else if(texto.startsWith(prefixo + " done")){
+                else if((texto.startsWith(prefixo + " pronto"))||(texto.startsWith(prefixo + " done"))){
                     //Verificar se existe partida
                     posCanal = verificarPartida(msg.channel);
                     //Se não existir partida
@@ -206,8 +216,7 @@ bot.on('message', msg=>{
                 //Lista de comandos
                 else {
                     msg.channel.send(
-                        "\t" + mensagemJSON.listaComandos + "\n\n" +
-                        listaComandos()
+                        mensagemJSON.listaComandos + "\n\n" + listaComandos()
                     );
                 }
             }
@@ -259,38 +268,38 @@ function listaJogos(){
     return (
         //Quem Sou Eu
         //Lembrar de concatenar com o próximo jogo
-        "01. :superhero: **" + mensagemJSON.jogoQuemSouEu + "**: -gb who\n" +
-        //Mega Senha
-        "INDISPONÍVEL 02. :question: **" + mensagemJSON.jogoSenha + "**: -gb password\n" +
+        "01. :superhero: " + mensagemJSON.jogoQuemSouEuLista + "\n" +
         //Stop
-        "INDISPONÍVEL 03. :octagonal_sign: **" + mensagemJSON.jogoStop + "**: -gb stop\n" +
+        "INDISPONÍVEL 02. :octagonal_sign: " + mensagemJSON.jogoStopLista + "\n" +
+        //Mega Senha
+        "INDISPONÍVEL 03. :question: " + mensagemJSON.jogoSenhaLista + "\n" +
         //Abecedário
-        "INDISPONÍVEL 04. :a: **" + mensagemJSON.jogoAbc + "**: -gb abc"
+        "INDISPONÍVEL 04. :a: " + mensagemJSON.jogoAbcLista
     );
 }
 
 function listaComandos(){
     return(
         //Lista de jogos
-        ":joystick: " + mensagemJSON.games + ": -gb games\n" + 
+        ":joystick: " + mensagemJSON.games + "\n" + 
         mensagemJSON.gamesDescricao + "\n\n" +
         //Entrar na partida
-        ":arrow_forward: " + mensagemJSON.join + ": -gb join\n" + 
+        ":arrow_forward: " + mensagemJSON.join + "\n" + 
         mensagemJSON.joinDescricao + "\n\n" +
         //Iniciar partida
-        ":white_check_mark: " + mensagemJSON.start + ": -gb start\n" + 
+        ":white_check_mark: " + mensagemJSON.start + "\n" + 
         mensagemJSON.startDescricao + "\n\n" +
         //Reiniciar partida
-        ":repeat: " + mensagemJSON.restart + ": -gb restart\n" + 
+        ":repeat: " + mensagemJSON.restart + "\n" + 
         mensagemJSON.restartDescricao + "\n\n" +
         //Cancelar partida
-        ":x: " + mensagemJSON.cancel + ": -gb cancel\n" + 
+        ":x: " + mensagemJSON.cancel + "\n" + 
         mensagemJSON.cancelDescricao + "\n\n" +
         //Sair da partida
-        ":man_running: " + mensagemJSON.leave + ": -gb leave\n" + 
+        ":man_running: " + mensagemJSON.leave + "\n" + 
         mensagemJSON.leaveDescricao + "\n\n" +
         //Encerrar partida
-        ":no_entry_sign: " + mensagemJSON.end + ": -gb end\n" + 
+        ":no_entry_sign: " + mensagemJSON.end + "\n" + 
         mensagemJSON.endDescricao
     );
 }

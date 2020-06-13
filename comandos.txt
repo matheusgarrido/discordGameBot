@@ -1,0 +1,49 @@
+    Ajuda
+-gb help
+-gb ajuda
+
+    Lista jogos
+-gb games
+-gb jogos
+
+    Entrar na partida
+-gb join
+-gb entrar
+
+    Iniciar partida
+-gb start
+-gb iniciar
+
+    Reiniciar partida
+-gb restart
+-gb reiniciar
+
+    Cancelar partida
+-gb cancel
+-gb cancelar
+
+    Sair da partida
+-gb leave
+-gb sair
+
+    Encerrar partida
+-gb end
+-gb encerrar
+
+    Acertou o personagem partida
+-gb done
+-gb pronto
+
+    Quem sou eu
+-gb who
+-gb quem
+
+    Mega senha
+-gb password
+-gb senha
+
+    Stop
+-gb stop
+
+    Abecedário
+-gb abc
