@@ -155,25 +155,24 @@ bot.on('message', msg=>{
                         posJogador = verificarJogador(posCanal, msg.author.id);
                         if (posJogador >= 0){
                             canais[posCanal].canal.send(msg.author.username + " " + mensagemJSON.jogadorLeave);
+                            //Se a partida já está em andamento mas não terminou, será replanejada na função dm do jogo
+                            if (canais[posCanal].partidaStatus >= 1 && canais[posCanal].partidaStart < fimJogo){
+                                canais[pos].partidaStatus = canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
+                            }
+                            //Atribuir novo dono à sala
+                            if (posJogador==0&&canais[posCanal].jogadores.length>1){
+                                canais[posCanal].canal.send(
+                                    canais[posCanal].jogadores[1].username +
+                                    " " + mensagemJSON.novoDono
+                                );
+                            }
+                            //Remover jogador
+                            canais[posCanal].jogadores.splice(posJogador, 1);
                             //Se não houver mais nenhum jogador, a partida será encerrada
-                            if (canais[posCanal].jogadores.length === 1 ){
+                            if (canais[posCanal].jogadores.length === 0){
                                 canais.splice(posCanal, 1);
                                 msg.channel.send(mensagemJSON.salaVazia, { tts: true });
                             }
-                            else{
-                                //Se a partida já está em andamento mas não terminou, será reiniciada
-                                if (canais[posCanal].partidaStatus >= 1 && canais[posCanal].partidaStart < fimJogo){
-                                    canais[pos].partidaStatus = canais[posCanal].jogo.partida.dm(posCanal, msg, prefixo);
-                                }
-                                //Atribuir novo dono à sala
-                                if (posJogador==0){
-                                    canais[posCanal].canal.send(
-                                        canais[posCanal].jogadores[posJogador].username +
-                                        " " + mensagemJSON.novoDono
-                                    );
-                                }
-                            }
-                            canais[posCanal].jogadores.splice(posJogador, 1);
                         }
                     }
                 }
