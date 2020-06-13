@@ -82,7 +82,10 @@ class QuemSouEu {
                     } 
                 }
                 //Agora sim verificar o primeiro jogador, senão quase sempre seria falso
-                if (this.jogadores[0].personagem === "") todosPersonagens = false;
+                if (this.jogadores[0].personagem === "") {
+                    todosPersonagens = false;
+                    jogadoresPendentes.push(this.jogadores[i].usuario.username);
+                }
                 //Caso todos já tenham informado o personagem
                 if (todosPersonagens){
                     msg.author.send(this.mensagem.quemIniciando);
