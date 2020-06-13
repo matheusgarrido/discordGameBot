@@ -16,8 +16,7 @@ if ("br" === "br"){
 
 bot.on('ready', ()=>{
     console.log('Estou pronto para ser usado');
-    //bot.user.setActivity("-gb ajuda", {type: "PLAYING"});
-    bot.user.setActivity("Manual: **-gb help** ou **-gb ajuda**", {type: 4});
+    bot.user.setActivity("-gb help ou -gb ajuda", {type: "PLAYING"});
 });
 var jogo = 0;
 var nomeJogo = "";
