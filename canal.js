@@ -13,6 +13,8 @@ class Canal {
         this.jogo = {"id": codJogo, "titulo": tituloJogo};
         this.mensagem = mensagem;
         this.jogadores = [{"usuario": anfitriao}];
+        //anfitriao.setActivity("-gb help ou -gb ajuda", {type: "PLAYING"});
+        //anfitriao.presence.status = "Jogando " + tituloJogo;
         this.partidaStatus = 0;
         //Mensagem Convite
         this.canal.send(
@@ -59,7 +61,7 @@ class Canal {
         switch(this.jogo.id){
             case 1:
                 if (this.placar.length===0){
-                    this.canal.send(msg.author.username + " " + this.mensagem.quemRefazerPersonagem);
+                    this.canal.send(msg.author.username + " " + this.mensagem.quemRefazerPersonagem, { tts: true });
                 }
                 break;
         }

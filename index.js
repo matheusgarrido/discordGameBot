@@ -74,7 +74,7 @@ bot.on('message', msg=>{
                         //Se o jogador não estiver na partida, será adicionado
                         jogadorEncontrado = verificarJogador(pos, msg.author.id);
                         if (jogadorEncontrado < 0){
-                            msg.reply(mensagemJSON.jogadorJoin);
+                            msg.channel.send(msg.author.username + " " + mensagemJSON.jogadorJoin, { tts: true });
                             canais[pos].jogadores.push({"usuario": msg.author});
                         }
                     }
