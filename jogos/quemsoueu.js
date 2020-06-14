@@ -79,13 +79,15 @@ class QuemSouEu {
                     //Verificar se todos já possuem personagem, exceto o primeiro jogador
                     if (this.jogadores[i].personagem === "" && i>0){
                         todosPersonagens = false;
-                        jogadoresPendentes.push(this.jogadores[i].usuario.username);
+                        //Nick do jogador anterior (que falta informar pro jogador atual)
+                        jogadoresPendentes.push(this.jogadores[i-1].usuario.username);
                     } 
                 }
                 //Agora sim verificar o primeiro jogador, senão quase sempre seria falso
                 if (this.jogadores[0].personagem === "") {
                     todosPersonagens = false;
-                    jogadoresPendentes.push(this.jogadores[i].usuario.username);
+                    //Nick do último jogador (que falta informar pro primeiro)
+                    jogadoresPendentes.push(this.jogadores[this.jogadores.length-1].usuario.username);
                 }
                 //Caso todos já tenham informado o personagem
                 if (todosPersonagens){

@@ -16,7 +16,7 @@ if ("br" === "br"){
 
 bot.on('ready', ()=>{
     console.log('Estou pronto para ser usado');
-    bot.user.setActivity("-gb help ou -gb ajuda", {type: "PLAYING"});
+    bot.user.setActivity(".gb help ou .gb ajuda", {type: "PLAYING"});
 });
 var jogo = 0;
 var nomeJogo = "";
@@ -26,10 +26,10 @@ canais = [];
 const fimJogo = 100;
 bot.on('message', msg=>{
     if (msg.author.id!=bot.user.id){
-        var prefixo = "-gb";
+        var prefixo = ".gb";
         var texto = msg.content.toLowerCase();
-        if (texto.startsWith("-gamebot")){
-            prefixo = "-gamebot";
+        if (texto.startsWith(".gamebot")){
+            prefixo = ".gamebot";
         }
         //Se for no canal coletivo
         if(msg.channel.type === "text"){
